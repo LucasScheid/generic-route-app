@@ -1,0 +1,55 @@
+version: '3.4'
+services:
+
+   edge-proxy:
+     image: nginx
+     volumes:
+      - ./conf.d/:/etc/nginx/conf.d/
+     networks: 
+        - edge
+     ports:
+        - 8014:80  
+
+   app1_1: 
+     image: luscheid/dockerhub:generic-route-app
+     container_name: app1_1
+     environment: 
+       - APP_NAME=app1_INSTANCIA_1
+     networks: 
+        - edge
+
+   app1_2: 
+     image: luscheid/dockerhub:generic-route-app
+     container_name: app1_2
+     environment: 
+        - APP_NAME=app1_INSTANCIA_2
+     networks: 
+        - edge
+
+   app1_3: 
+     image: luscheid/dockerhub:generic-route-app
+     container_name: app1_3
+     environment: 
+       - APP_NAME=app1_INSTANCIA_3
+     networks: 
+       - edge
+
+   app1_4: 
+      image: luscheid/dockerhub:generic-route-app
+      container_name: app1_4
+      environment: 
+        - APP_NAME=app1_INSTANCIA_4
+      networks: 
+        - edge
+
+   app2: 
+     image: luscheid/dockerhub:generic-route-app
+     container_name: app2
+     environment: 
+        - APP_NAME=app2_INSTANCIA_UNICA
+     networks: 
+        - edge
+        
+networks:
+    edge:
+        driver: bridge
